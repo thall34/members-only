@@ -8,6 +8,12 @@
         <a href="/logout">
             <button>Log Out</button>
         </a>
+        <a href="/message/<%= user.user_id %>">
+            <button>New Message</button>
+        </a>
+        <a href="/secret/<%= user.user_id %>">
+            <button>Enter secret code</button>
+        </a>
     <% } else { %>
         <a href="/login">
             <button>Log In</button>
@@ -15,6 +21,18 @@
         <a href="/sign-up">
             <button>Register</button>
         </a>
+    <% } %>
+    <% if (locals.messages) { %>
+        <% messages.forEach((message) => { %>
+            <div>
+                <h1><%= message.first_name %> <%= message.last_name %></h1>
+                <% if (locals.user && (locals.user.membership === 'member' || locals.user.membership === 'admin')) { %>
+                    <h2><%= message.title %></h2>
+                    <p><%= message.text %></p>
+                <% } %>
+                <p><%= message.timestamp.toLocaleString() %></p>
+            </div>
+        <% }); %>
     <% } %>
     </body>
 </html>

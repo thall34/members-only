@@ -2,9 +2,9 @@ const { Router } = require('express');
 const indexRouter = Router();
 const indexController = require('../controllers/indexController');
 const passport = require('passport');
-const authentication = require('../middleware/authMiddleware');
+// const authentication = require('../middleware/authMiddleware');
 
-indexRouter.get('/', authentication, indexController.getHomepage);
+indexRouter.get('/', indexController.getHomepage);
 indexRouter.get('/sign-up', indexController.getRegisterPage);
 indexRouter.post('/sign-up', indexController.postNewUser);
 indexRouter.get('/login', indexController.getLoginPage);
@@ -15,7 +15,9 @@ indexRouter.post('/login', passport.authenticate('local', {
     })
 );
 indexRouter.get('/logout', indexController.logOutUser);
-indexRouter.get('/message', indexController.getNewMessagePage);
-indexRouter.get('/secret', indexController.getSecretCodePage);
+indexRouter.get('/message/:id', indexController.getNewMessagePage);
+indexRouter.post('/message/:id', indexController.postNewMessage);
+indexRouter.get('/secret/:id', indexController.getSecretCodePage);
+indexRouter.post('/secret/:id', indexController.upgradeUser);
 
 module.exports = indexRouter;
