@@ -3,6 +3,15 @@
         <title><%= title %></title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+    <% if (locals.user) { %>
+        <h2>Welcome <%= user.first_name %> <%= user.last_name %></h2>
+    <% } else { %>
+        <a href="/login">
+            <button>Log In</button>
+        </a>
+        <a href="/sign-up">
+            <button>Register</button>
+        </a>
+    <% } %>
     </body>
 </html>
