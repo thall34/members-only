@@ -7,7 +7,7 @@ async function getHomepage(req, res, next) {
     try {
         res.render('index', {
             title: 'Secret Message Club',
-            user: req.user
+            user: req.user || null
         });
 
     } catch (err) {
@@ -64,8 +64,22 @@ async function postNewUser(req, res, next) {
     try {
         const user = req.body;
         const hashedPassword = await bcrypt.hash(user.password, 10)
-        await db.createUser(user.firstName, user.lastName, user.email, hashedPassword);
+        await db.createUser(user.firstName, user.lastName, user.username, hashedPassword);
         res.redirect('/');
+    } catch(error) {
+        next(error);
+    };
+};
+
+async function logOutUser(req, res, next) {
+    try {
+        req.logout((error) => {
+            if (error) {
+                return next(error);
+            };
+            
+            res.redirect('/')
+        });
     } catch(error) {
         next(error);
     };
@@ -78,4 +92,5 @@ module.exports = {
     getNewMessagePage,
     getSecretCodePage,
     postNewUser,
+    logOutUser,
 };

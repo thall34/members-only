@@ -5,6 +5,9 @@
     <body>
     <% if (locals.user) { %>
         <h2>Welcome <%= user.first_name %> <%= user.last_name %></h2>
+        <a href="/logout">
+            <button>Log Out</button>
+        </a>
     <% } else { %>
         <a href="/login">
             <button>Log In</button>

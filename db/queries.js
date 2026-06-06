@@ -15,8 +15,8 @@ async function getUserByName(username) {
         WHERE users.username = $1`, [username]
     );
 
-    return rows[0];
     console.log(rows[0]);
+    return rows[0];
 };
 
 async function getUserById(id) {
@@ -25,8 +25,8 @@ async function getUserById(id) {
         WHERE users.user_id = $1`, [id]
     );
 
-    return rows[0];
     console.log(rows[0]);
+    return rows[0];
 };
 
 async function updateMember(id) {

@@ -14,6 +14,7 @@ indexRouter.post('/login', passport.authenticate('local', {
     failureMessage: 'true',
     })
 );
+indexRouter.get('/logout', indexController.logOutUser);
 indexRouter.get('/message', indexController.getNewMessagePage);
 indexRouter.get('/secret', indexController.getSecretCodePage);
 
