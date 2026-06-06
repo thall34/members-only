@@ -31,6 +31,11 @@
                     <p><%= message.text %></p>
                 <% } %>
                 <p><%= message.timestamp.toLocaleString() %></p>
+                <% if (locals.user && locals.user.membership === 'admin') { %>
+                    <a href="/message/<%= message.message_id %>/delete">
+                        <button>Delete Message</button>
+                    </a>
+                <% } %>
             </div>
         <% }); %>
     <% } %>

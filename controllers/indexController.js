@@ -1,11 +1,10 @@
 const db = require('../db/queries');
 const bcrypt = require('bcryptjs');
+const { validationResult, matchedData } = require('express-validator');
 
 // Displays homepage
 async function getHomepage(req, res, next) {
-    console.log(req.user)
     const messages = await db.getAllMessages();
-    console.log(messages)
     try {
         res.render('index', {
             title: 'Secret Message Club',
@@ -42,7 +41,7 @@ async function getRegisterPage(req, res, next) {
 
 // Displays form page for adding a new message
 async function getNewMessagePage(req, res, next) {
-    const id = Number(req.params.id)
+    const id = req.validatedId;
     try {
         res.render('new-message', {
             title: 'New Message',
@@ -55,7 +54,7 @@ async function getNewMessagePage(req, res, next) {
 
 // Displays the secret code page to authenticate members and admins
 async function getSecretCodePage(req, res, next) {
-    const id = Number(req.params.id);
+    const id = req.validatedId;
     try {
         res.render('secret-code', {
             title: 'What is the secret code?',
@@ -69,7 +68,16 @@ async function getSecretCodePage(req, res, next) {
 // Adds new user to database
 async function postNewUser(req, res, next) {
     try {
-        const user = req.body;
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).render('register-page', {
+                title: 'Register New User',
+                errors: errors.array()
+            });
+        };
+
+        const user = matchedData(req);
         const hashedPassword = await bcrypt.hash(user.password, 10)
         await db.createUser(user.firstName, user.lastName, user.username, hashedPassword);
         res.redirect('/');
@@ -93,11 +101,21 @@ async function logOutUser(req, res, next) {
     };
 };
 
+// Adds new message to database
 async function postNewMessage(req, res, next) {
     try {
-        const id = Number(req.params.id)
-        const message = req.body;
-        console.log(id, message)
+        const errors = validationResult(req);
+        const id = req.validatedId;
+
+        if (!errors.isEmpty()) {
+            return res.status(400).render('new-message', {
+                title: 'What is the secret code?',
+                id: id,
+                errors: errors.array()
+            });
+        };
+
+        const message = matchedData(req);
         await db.addMessage(id, message.title, message.text);
         res.redirect('/');
     } catch(error) {
@@ -105,19 +123,40 @@ async function postNewMessage(req, res, next) {
     };
 };
 
+// Upgrades user to member or admin if code is correct
 async function upgradeUser(req, res, next) {
-    const code = req.body.secretCode;
-    const id = Number(req.params.id)
     try {
-        if (code === 'member') {
+        const errors = validationResult(req);
+        const id = req.validatedId;
+
+        if (!errors.isEmpty()) {
+            return res.status(400).render('secret-code', {
+                title: 'New Message',
+                id: id,
+                errors: errors.array()
+            });
+        };
+
+        const code = matchedData(req)
+        if (code.secretCode === 'member') {
             await db.updateMember(id);
         };
 
-        if (code === 'admin') {
+        if (code.secretCode === 'admin') {
             await db.updateAdmin(id);
         };
 
         res.redirect('/')
+    } catch(error) {
+        next(error);
+    };
+};
+
+async function deleteMessage (req, res, next) {
+    const id = req.validatedId;
+    try {
+        await db.deleteMessage(id);
+        res.redirect('/');
     } catch(error) {
         next(error);
     };
@@ -133,4 +172,5 @@ module.exports = {
     logOutUser,
     postNewMessage,
     upgradeUser,
+    deleteMessage,
 };

@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS messages (
   message_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   user_id INTEGER,
   title VARCHAR(50),
-  text VARCHAR(50),
+  text VARCHAR(150),
   timestamp TIMESTAMPTZ,
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );

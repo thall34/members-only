@@ -3,12 +3,13 @@
         <title><%= title %></title>
     </head>
     <body>
+        <%- include('./partials/formErrors.ejs') %>
         <form action="/login" method="POST">
             <h1>Login</h1>
             <label for="username">Email: </label>
-            <input type="email" name="username" id="username" required>
+            <input type="email" name="username" id="username">
             <label for="password">Password: </label>
-            <input type="password" name="password" id="password" required>
+            <input type="password" name="password" id="password">
             <button type="submit">Log In</button>
         </form>
     </body>
