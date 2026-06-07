@@ -1,43 +1,55 @@
 <html>
     <head>
         <title><%= title %></title>
+        <link rel="stylesheet" href="/styles.css">
+        <link rel="stylesheet" href="/app.css">
     </head>
     <body>
-    <% if (locals.user) { %>
-        <h2>Welcome <%= user.first_name %> <%= user.last_name %></h2>
-        <a href="/logout">
-            <button>Log Out</button>
-        </a>
-        <a href="/message/<%= user.user_id %>">
-            <button>New Message</button>
-        </a>
-        <a href="/secret/<%= user.user_id %>">
-            <button>Enter secret code</button>
-        </a>
-    <% } else { %>
-        <a href="/login">
-            <button>Log In</button>
-        </a>
-        <a href="/sign-up">
-            <button>Register</button>
-        </a>
-    <% } %>
-    <% if (locals.messages) { %>
-        <% messages.forEach((message) => { %>
-            <div>
-                <h1><%= message.first_name %> <%= message.last_name %></h1>
-                <% if (locals.user && (locals.user.membership === 'member' || locals.user.membership === 'admin')) { %>
-                    <h2><%= message.title %></h2>
-                    <p><%= message.text %></p>
-                <% } %>
-                <p><%= message.timestamp.toLocaleString() %></p>
-                <% if (locals.user && locals.user.membership === 'admin') { %>
-                    <a href="/message/<%= message.message_id %>/delete">
-                        <button>Delete Message</button>
-                    </a>
-                <% } %>
+    <%- include('./partials/header.ejs') %>
+    <main>
+        <% if (locals.user) { %>
+            <div class="user-buttons">
+                <h2>Welcome <%= user.first_name %> <%= user.last_name %></h2>
+                <a href="/logout">
+                    <button>Log Out</button>
+                </a>
+                <a href="/message/<%= user.user_id %>">
+                    <button>New Message</button>
+                </a>
+                <a href="/secret/<%= user.user_id %>">
+                    <button>Enter secret code</button>
+                </a>
             </div>
-        <% }); %>
-    <% } %>
+        <% } else { %>
+            <div class="user-buttons">
+                <a href="/login">
+                    <button>Log In</button>
+                </a>
+                <a href="/sign-up">
+                    <button>Register</button>
+                </a>
+            </div>
+        <% } %>
+        <% if (locals.messages) { %>
+        <div class="message-container">
+            <% messages.forEach((message) => { %>
+                <div class="message-card">
+                    <h1><%= message.first_name %> <%= message.last_name %></h1>
+                    <% if (locals.user && (locals.user.membership === 'member' || locals.user.membership === 'admin')) { %>
+                        <h2><%= message.title %></h2>
+                        <p><%= message.text %></p>
+                    <% } %>
+                    <p><%= message.timestamp.toLocaleString() %></p>
+                    <% if (locals.user && locals.user.membership === 'admin') { %>
+                        <a href="/message/<%= message.message_id %>/delete">
+                            <button>Delete Message</button>
+                        </a>
+                    <% } %>
+                </div>
+            <% }); %>
+        <% } %>
+        </div>
+        </main>
+        <%- include('./partials/footer.ejs') %>
     </body>
 </html>

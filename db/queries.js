@@ -27,7 +27,6 @@ async function getUserById(id) {
 };
 
 async function updateMember(id) {
-    console.log(id);
     await pool.query(
         `UPDATE users
         SET membership = 'member'

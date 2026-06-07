@@ -1,0 +1,95 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header, footer {
+    font-size: 1.5em;
+    text-align: center;
+    padding: 1em;
+    border: 1px solid black;
+}
+
+footer {
+    font-size: 1em;
+    margin-top: auto;
+    
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+}
+
+button {
+    padding: 1em 2em;
+    border: 1px solid black;
+    border-radius: 0.5em;
+    width: fit-content;
+}
+
+a {
+    text-decoration: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    padding: 2em;
+    gap: 2em;
+    border: 1px solid black;
+    border-radius: 1.5em;
+}
+
+label {
+    font-size: 1.3em;
+}
+
+input, textarea {
+    border: 1px solid black;
+    border-radius: 0.5em;
+    padding: 0.5em;
+}
+
+ul {
+    list-style-type: none;
+    text-align: center;
+    padding: 2em;
+    border: 1px solid black;
+}
+
+.user-buttons {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 3em 10em;
+    gap: 1em;
+}
+
+.message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em;
+    gap: 2em;
+}
+
+.message-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    padding: 4em;
+    gap: 2em;
+    border: 1px solid black;
+    border-radius: 2em;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    padding: 2em;
+}

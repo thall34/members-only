@@ -1,16 +1,28 @@
 <html>
     <head>
         <title><%= title %></title>
+        <link rel="stylesheet" href="/styles.css">
+        <link rel="stylesheet" href="/app.css">
     </head>
     <body>
+        <%- include('./partials/header.ejs') %>
         <%- include('./partials/formErrors.ejs') %>
-        <form action="/message/<%= id %>" method="POST">
-            <h1>New Message</h1>
-            <label for="title">Title: </label>
-            <input type="text" name="title" id="title">
-            <label for="text">Message: </label>
-            <textarea name="text" id="text" cols="30" rows="10">Type your message here...</textarea>
-            <button type="submit">Submit</button>
-        </form>
+        <main>
+            <div class="user-buttons">
+                <a href="/">
+                    <button>Back to home</button>
+                </a>
+            </div>
+            <div class="form-container">
+                <form action="/message/<%= id %>" method="POST">
+                    <label for="title">Title: </label>
+                    <input type="text" name="title" id="title">
+                    <label for="text">Message: (max 150 characters)</label>
+                    <textarea name="text" id="text" cols="30" rows="10">Type your message here...</textarea>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </main>
+        <%- include('./partials/footer.ejs') %>
     </body>
 </html>

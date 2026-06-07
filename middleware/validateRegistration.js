@@ -5,10 +5,10 @@ const validateRegistration = [
     .trim()
     .notEmpty().withMessage('Must include a first name')
     .isLength({ max: 50 }).withMessage('First name must be less than 50 characters'),
-    body('firstName')
+    body('lastName')
     .trim()
-    .notEmpty().withMessage('Must include a first name')
-    .isLength({ max: 50 }).withMessage('First name must be less than 50 characters'),
+    .notEmpty().withMessage('Must include a last name')
+    .isLength({ max: 50 }).withMessage('Last name must be less than 50 characters'),
     body('username')
     .trim()
     .notEmpty().withMessage('Must include an email')

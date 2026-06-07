@@ -4,7 +4,8 @@
   "description": "Authentication App using express, ejs, express-validator, passport and bcrypt",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node db/populatedb.js && node app.js"
   },
   "repository": {
     "type": "git",

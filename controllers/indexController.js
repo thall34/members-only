@@ -152,6 +152,7 @@ async function upgradeUser(req, res, next) {
     };
 };
 
+// Deletes message from database using message id
 async function deleteMessage (req, res, next) {
     const id = req.validatedId;
     try {
